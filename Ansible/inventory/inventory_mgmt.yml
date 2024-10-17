@@ -1,0 +1,36 @@
+---
+
+MGMT_DC1_ROW_A: 
+  hosts:
+    10.151.39.111:
+    10.151.39.113:
+    10.151.39.115:
+
+MGMT_DC1_ROW_B: 
+  hosts:
+    10.151.39.112:
+    10.151.39.114:
+
+MGMT_DC1:
+  children:
+    MGMT_DC1_ROW_A: 
+    MGMT_DC1_ROW_B: 
+
+MGMT_DC2_ROW_A: 
+  hosts:  
+    10.251.39.111:
+    10.251.39.113:
+    10.251.39.115:
+
+MGMT_DC2_ROW_B: 
+  hosts:  
+    10.251.39.112:
+    10.251.39.114:
+
+MGMT_DC2_ROW_B_AGGREGATE: 
+  hosts:  
+    10.251.39.112:
+
+MGMT_DC2_ROW_B_ACCESS: 
+  hosts:  
+    10.251.39.114:

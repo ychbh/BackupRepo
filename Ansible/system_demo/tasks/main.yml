@@ -1,0 +1,3 @@
+---
+  - name: Netconf_Restconfs.yml
+    import_tasks: Netconf_Restconf.yml

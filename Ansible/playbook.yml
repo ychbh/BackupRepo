@@ -1,0 +1,14 @@
+---
+- name: save running-config
+  cisco.ios.ios_command:
+    commands: copy running-config startup-config
+    vars:
+      ansible_command_timeout: 30
+      
+- name: configure cisco routers
+  hosts: routers
+  connection: ansible.netcommon.network_cli
+  gather_facts: false
+
+- roles:
+    roles

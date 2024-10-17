@@ -1,0 +1,9 @@
+---
+
+- name: Network Getting Started First Playbook Extended
+  connection: ansible.netcommon.network_cli
+  gather_facts: false
+  hosts: MGMT_DC1_ROW_B
+
+  roles:
+    - system_demo

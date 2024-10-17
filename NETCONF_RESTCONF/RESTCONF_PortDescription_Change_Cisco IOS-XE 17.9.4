@@ -1,0 +1,18 @@
+###
+# parameters provided in csv file, with following head
+# MGMT_SW_IP	port	description
+###
+###Postman set up as below###
+method: PATCH
+url: 'https://{{MGMT_SW_IP}}/restconf/data/Cisco-IOS-XE-native:native/interface/GigabitEthernet' \
+--header 'Accept: application/yang-data+json, application/yang-data.errors+json'\''' \
+--header 'Content-Type: application/yang-data+json' \
+--header 'Authorization: Basic. xxxx \
+--data '{
+    "Cisco-IOS-XE-native:GigabitEthernet": [
+        {
+            "name": "1/0/{{port}}",
+            "description": "{{description}}"
+        }
+    ]
+}'

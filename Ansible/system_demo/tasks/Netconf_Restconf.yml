@@ -1,0 +1,52 @@
+---
+
+    - name: Configure netconf/Restconf ACL 99
+      ios_config:
+        lines: 
+        - ip access-list standard 99
+
+    - name: Configure netconf/Restconf ACL 99 clauses
+      ios_config:
+        lines: 
+        - 10 permit 10.151.51.0 0.0.0.255
+        - 20 remark ###DC2 ADMIN VPN SUBNET ###
+        - 20 permit 10.251.51.0 0.0.0.255
+        - 30 remark ###DC1 JUMPBOX SUBNET ###
+        - 30 permit 10.111.96.0 0.0.0.255
+        - 40 remark ###DC2 JUMPBOX SUBNET ###
+        - 40 permit 10.121.96.0 0.0.0.255
+        - 50 remark ###DC1 Prod Jumpbox
+        - 50 permit 10.111.200.0 0.0.0.255
+        - 60 remark ###DC2 Prod Jumpbox
+        - 60 permit 10.121.200.0 0.0.0.255
+        - 70 remark ###DC1 MONITORING (SOLARWINDS) ###
+        - 70 permit 10.111.110.0 0.0.0.255
+        - 80 remark ###DC2 MONITORING (SOLARWINDS) ###
+        - 80 permit 10.121.110.0 0.0.0.255
+        - 340 remark ###CORP-WVD-ADMIN-VNET-permit 10.212.192.0-21 subnet
+        - 340 permit 10.212.192.0 0.0.3.255
+        parents:
+         - ip access-list standard 99
+
+    - name: Configure netconf/Restconf
+      ios_config:
+        lines: 
+        - netconf-yang
+        - netconf ssh acl 99
+        - restconf
+        - restconf ipv4 access-list name ADMIN-ACCESS      
+        
+    - name: Configure Restconf https      
+      ios_config:
+        lines: 
+        - no ip http server
+        - ip http access-class ipv4 99    
+        - ip http authentication aaa login-authentication ISE-TACACS
+        - ip http authentication aaa exec-authorization ISE-TACACS
+        - ip http secure-server  
+ 
+    - name: Configure aaa for restconf authentication bug    
+      ios_config:
+        lines: 
+        - aaa authentication login default group GD-TACACS local
+        - aaa authorization exec default group GD-TACACS local 

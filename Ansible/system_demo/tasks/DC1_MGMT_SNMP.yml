@@ -1,0 +1,47 @@
+---
+
+   - name: Configure SNMPv3
+     ios_config:
+       lines: 
+       - snmp-server view SNMPv3-RD internet included
+       - snmp-server view SNMPv3-WR internet included
+       - snmp-server group SNMPv3-GRP v3 priv access SNMPV3-ACL
+       - snmp-server user SNMPv3-USR SNMPv3-GRP v3 auth sha 3465FoothillBlvd priv aes 128 Pasadena,CA91107
+       - snmp-server trap-source gigabitEthernet 0/0
+       - snmp-server source-interface informs gigabitEthernet 0/0
+       - snmp-server host 10.111.110.100 version 3 priv SNMPv3-USR 
+       - snmp-server host 10.111.110.103 version 3 priv SNMPv3-USR 
+       - snmp-server host 10.121.110.100 version 3 priv SNMPv3-USR 
+       - snmp-server host 10.121.110.103 version 3 priv SNMPv3-USR 
+       - snmp-server host 10.111.110.51 version 3 priv SNMPv3-USR
+       - snmp-server host 10.210.1.5 version 3 priv SNMPv3-USR
+       - snmp-server host 10.211.252.6 version 3 priv SNMPv3-USR
+       - snmp-server host 10.132.11.117 version 3 priv SNMPv3-USR
+       - snmp-server host 10.111.110.100 informs version 3  priv SNMPv3-USR 
+       - snmp-server host 10.111.110.103 informs version 3  priv SNMPv3-USR 
+       - snmp-server host 10.121.110.100 informs version 3  priv SNMPv3-USR 
+       - snmp-server host 10.121.110.103 informs version 3  priv SNMPv3-USR 
+       - snmp-server host 10.111.110.51 informs version 3  priv SNMPv3-USR
+       - snmp-server host 10.210.1.5 informs version 3  priv SNMPv3-USR
+       - snmp-server host 10.211.252.6 informs version 3  priv SNMPv3-USR
+       - snmp-server location DC1
+       - ip access-list standard SNMPV3-ACL
+   - name: Configure SNMPV3-ACL Permits
+     ios_config:
+       lines: 
+       - 70 remark "###DC1 MONITORING (SOLARWINDS) ###
+       - 70 permit 10.111.110.0 0.0.0.255
+       - 80 remark "###DC2 MONITORING (SOLARWINDS) ###
+       - 80 permit 10.121.110.0 0.0.0.255
+       - 90 remark "###AZURE-D4PDEUS2ORION01
+       - 90 permit 10.210.1.5
+       - 100 remark "###AZURE-D4PDWUS2ORION01
+       - 100 permit 10.211.252.6
+       - 110 remark "###AWS-D3SSPDNETPATH01
+       - 110 permit 10.132.11.117
+       - 120 remark "###DC1 MONITORING (ISE, LIVEACTION, ETC) ###
+       - 120 permit 10.112.52.0 0.0.0.255
+       - 130 remark "###DC2 MONITORING (ISE, LIVEACTION, ETC) ###
+       - 130 permit 10.122.52.0 0.0.0.255
+       parents:
+        - ip access-list standard SNMPV3-ACL

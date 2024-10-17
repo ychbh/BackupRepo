@@ -1,0 +1,25 @@
+---
+
+   - name: reading the csv file
+     community.general.read_csv:
+      path: system_demo/files/switch_ports_configs.csv
+      delimiter:  ','
+      key:  seq
+     register: SW_Port_Dict
+  
+   - name: display user_list data
+     debug:
+      var: SW_Port_Dict | dict2items | selectattr ('value') | selectattr ('value')
+ 
+   - name: configure interface
+     ios_config:
+      parents:  interface GigabitEthernet1/0/{{ item.value.item.port }}
+      lines:
+        - description {{ item.value.item.description }}
+        - switchport mode {{ item.value.item.switchport_mode }} 
+        - switchport access vlan {{ item.value.item.vlan }}
+        - spanning-tree {{ item.value.item.spanning_tree }}
+#      with_items: {{  SW_Port_Dict  }}
+     loop: "{{ SW_Port_Dict | dict2items  }}"
+     loop_control:
+      loop_var: item

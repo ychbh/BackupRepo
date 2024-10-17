@@ -1,0 +1,18 @@
+---
+
+
+MGMT_DC2_ROW_A: 
+  hosts:
+    10.251.39.111:
+    10.251.39.113:
+    10.251.39.115:
+
+MGMT_DC2_ROW_B: 
+  hosts:
+    10.251.39.112:
+    10.251.39.114:
+
+MGMT_DC2:
+  children:
+    MGMT_DC2_ROW_A: 
+    MGMT_DC2_ROW_B: 

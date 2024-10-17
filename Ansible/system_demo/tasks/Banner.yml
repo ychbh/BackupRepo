@@ -1,0 +1,26 @@
+---
+
+   - name: Banner exec
+     ios_banner:
+        banner: exec
+        text: |
+          UNAUTHORIZED ACCESS TO THIS NETWORK DEVICE IS PROHIBITED. 
+          You must have explicit permission to access or configure 
+          this device. All activities performed on this device are 
+          being logged, and violations of this policy will result in 
+          disciplinary action, and will be reported to law 
+          enforcement. There is no right to privacy on this device.
+          ALL CONNECTIONS TO THIS HOST ARE BEING LOGGED
+        state: present
+   - name: Banner login
+     ios_banner:      
+        banner: login
+        text: |
+          Connected to: $(hostname)
+          ----------------------   WARNING!! ------------------------
+          This is an actively monitored private system. Unauthorized
+          access is STRICTLY prohibited.
+          Disconnect IMMEDIATELY if you are not an authorized user!!!
+          -----------------------------------------------------------
+        state: present          
+    

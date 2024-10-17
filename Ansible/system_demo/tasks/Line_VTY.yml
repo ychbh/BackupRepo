@@ -1,0 +1,6 @@
+---
+  #- name: Configure line vty 0-15 admin acl
+  #  ios_config:
+  #    lines: 
+  #    - line vty 0 15
+  #    - access-class ADMIN-ACCESS in vrf-also
